@@ -30,3 +30,5 @@ transformers:
 - golang_transformer:
     host: 'http://localhost:8080'
 ```
+
+The transformer will then remove every occurence of the text specified in "host" 
