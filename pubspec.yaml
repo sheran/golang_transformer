@@ -1,8 +1,8 @@
 name: golang_transformer
 author: Sheran Gunasekera <sheran.g@gmail.com>
-version: 0.1.10
+version: 0.1.11
 homepage: https://github.com/sheran/golang_transformer
 description: A transformer to swap the HTML FORM action to something else so you can test a different backend while using the Dart Editor
 dependencies:
-  barback: any
-  html5lib: any
+  barback: ">=0.11.0+3 <0.11.1"
+  html5lib: ">=0.9.1 <1.0.0"

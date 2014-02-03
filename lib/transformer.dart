@@ -18,6 +18,9 @@ class GolangTransformer extends Transformer {
   GolangTransformer.asPlugin(this.settings){
     var args = settings.configuration;
     this.host = args['host'];
+    if(this.host == null){
+      print("You will need to add a 'host' variable in your project's pubspec.yaml file that I will strip out.\n");
+    }
   }
   
   
@@ -39,7 +42,7 @@ class GolangTransformer extends Transformer {
               LinkedHashMap<dynamic,String> attributes = tag.attributes;
               if(attributes.containsKey('action')){
                 String attribute = attributes['action'];
-                if(attribute.startsWith(this.host)){
+                if(this.host != null && attribute.startsWith(this.host)){
                   newTag.attributes['action'] = attribute.substring(this.host.length);  
                 }
               }
