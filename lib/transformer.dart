@@ -46,7 +46,7 @@ class GolangTransformer extends Transformer {
               tag.replaceWith(newTag);
             }
           }
-        transform.addOutput(new Asset.fromString(id, content)); 
+        transform.addOutput(new Asset.fromString(id, document.outerHtml)); 
     }); 
   } 
 } 
