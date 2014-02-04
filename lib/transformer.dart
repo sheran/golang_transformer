@@ -17,16 +17,15 @@ class GolangTransformer extends Transformer {
   
   GolangTransformer.asPlugin(this.settings){
     var args = settings.configuration;
-    this.host = args['host'];
-    if(this.host == null){
+    host = args['host'];
+    if(host == null){
       print("You will need to add a 'host' variable in your project's pubspec.yaml file that I will strip out.\n");
     }
   }
   
   
-  Future<bool> isPrimary(Asset input) {  
-    return new Future.value(input.id.extension == '.html'); 
-  } 
+  Future<bool> isPrimary(Asset input) => 
+      new Future.value(input.id.extension == '.html'); 
 
   Future apply(Transform transform) { 
     var input = transform.primaryInput;
@@ -36,18 +35,16 @@ class GolangTransformer extends Transformer {
         then((content) {
           Document document = parse(content);
           List<Element> forms = document.queryAll('form');
-          if(forms.length > 0){
-            for(Element tag in forms){
-              Element newTag = tag;
-              LinkedHashMap<dynamic,String> attributes = tag.attributes;
-              if(attributes.containsKey('action')){
-                String attribute = attributes['action'];
-                if(this.host != null && attribute.startsWith(this.host)){
-                  newTag.attributes['action'] = attribute.substring(this.host.length);  
-                }
+          for(Element tag in forms){
+            Element newTag = tag;
+            LinkedHashMap<dynamic,String> attributes = tag.attributes;
+            if(attributes.containsKey('action')){
+              String attribute = attributes['action'];
+              if(host != null && attribute.startsWith(host)){
+                newTag.attributes['action'] = attribute.substring(host.length);  
               }
-              tag.replaceWith(newTag);
             }
+            tag.replaceWith(newTag);
           }
         transform.addOutput(new Asset.fromString(id, document.outerHtml)); 
     }); 
